@@ -12,7 +12,7 @@
 %locations
 
 // Declaração dos tokens, correspondendo ao lexer.l 
-%token IF ELSE WHILE FOR
+%token IF ELSE WHILE
 %token INT FLOAT_T CHAR_T STRING_T RETURN 
 %token ID INTEGER FLOAT CHAR STRING
 
