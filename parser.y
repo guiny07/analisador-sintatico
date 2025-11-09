@@ -9,6 +9,8 @@
     
 %}
 
+%locations
+
 // Declaração dos tokens, correspondendo ao lexer.l 
 %token IF ELSE WHILE FOR
 %token INT FLOAT_T CHAR_T STRING_T RETURN 
@@ -52,8 +54,8 @@ lista_comandos
 comando: 
      declaracao ';'             { printf("Variable declaration at line %d \n", yylineno); }
     | atribuicao ';'            { printf("Assign at line %d \n", yylineno); }
-    | selecao                   { printf("if/else structure at line %d \n", yylineno); }
-    | repeticao                 { printf("loop structure at line %d \n", yylineno); }
+    | selecao                   
+    | repeticao                 
     | chamada_funcao ';'        { printf("Function call at line %d \n", yylineno); }
     | declaracao_funcao         
     | expressao ';'             { printf("Expression statement at line %d\n", yylineno); }
@@ -83,13 +85,12 @@ atribuicao:
     ;
 
 selecao:
-     IF '(' expressao ')' bloco %prec LOWER_THAN_ELSE    
-    | IF '(' expressao ')' bloco ELSE bloco
+     IF '(' expressao ')' bloco %prec LOWER_THAN_ELSE           { printf("if structure at line %d \n", @1.first_line); }   
+    | IF '(' expressao ')' bloco ELSE bloco                     { printf("if/else structure at line %d \n", @1.first_line); }
     ;
 
 repeticao:
-     WHILE '(' expressao ')' bloco 
-    | FOR '(' expressao ';' expressao ';' expressao ')' bloco
+     WHILE '(' expressao ')' bloco                              { printf("while loop at line %d \n", @1.first_line); } 
     ;
 
 bloco:
@@ -112,7 +113,7 @@ lista_argumentos_nao_vazia:
     ;
 
 declaracao_funcao:
-     tipo ID '(' lista_parametros ')' bloco           { printf("Function definition at line %d\n", yylineno); }
+     tipo ID '(' lista_parametros ')' bloco           { printf("Function definition at line %d\n", @1.first_line); }
     | tipo ID '(' lista_parametros ')' ';'            { printf("Function prototype at line %d\n", yylineno); }
     ;
 
