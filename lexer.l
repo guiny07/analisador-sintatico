@@ -25,7 +25,6 @@ STRING                                  \"([^\"\\]|\\.)*\"
 "if"                                    { return IF; }
 "else"                                  { return ELSE; }
 "while"                                 { return WHILE; }
-"for"                                   { return FOR; }
 "int"                                   { return INT; }
 "float"                                 { return FLOAT_T; }
 "char"                                  { return CHAR_T; }
